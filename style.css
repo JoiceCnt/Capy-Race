@@ -1,0 +1,8 @@
+#game {
+    position: relative;
+    width: 80%;
+    height: 100vh;
+    float: right;
+    background-color: white; 
+    overflow: hidden; /*to avoid capybara to move outside the area*/
+}
