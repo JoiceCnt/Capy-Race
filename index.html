@@ -1,37 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capy race</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./Styles/style.css" />
+    <title>Capybara: Garden Edition</title>
+  </head>
+  <body>
+    <!--first screen to start the game -->
+    <div id="start-screen">
+      <h1></h1>
+      <img src="./image/startcapybara.jpg" alt="" class="startCapybara" />
+      <br />
+      <button id="start-button">Click here to start the game</button>
+      <p>Use the left and right arrow to move the capybara</p>
+    </div>
+    <!--game area where the capibara moves and objects fall -->
+    <div id="Game-Page">
+      <section id="sideBar">
+        <h3>Level: <span id="level">5</span></h3>
+        <h3>Lives: <span id=" lives">5</span></h3>
+      </section>
 
-    <div id="game">
-        <div id="capybara"><img src="image/capybara.jpg"></div>
-       <div>falling-objects 
+      <div id="game-screen">
+        <!--<div id="capybara"><img src="image/capybara.jpg"></div>-->
+
+        <!-- <div id="falling-objects">  
         <img src="./image/water.jpg" class="water">
         <img src="./image/sun.jpg" class="sun">
         <img src="./image/fertilizer.jpg" class="fertilizer">
-        <img src="./image/ladybug.jpg" class="ladybug">
-        </div>
+        <img src="./image/ladybug.jpg" class="">-->
+      </div>
     </div>
+    <!--score and pontuation bar -->
+    <!--<div id="info-container">
+    <section>
 
- 
-<div id="info-container">
-
-    <div class="level">Level: <span id="level">0</span></div>
-
-    <div id="score">
+    </section>
+  
+    <div id="progress-bar">
+        <section>
+        <h3>Progress bar </h3>
     <div class="bar"><img src="./image/water.jpg"><div class="progress" id="bar-water"></div></div>
     <div class="bar"><img src="./image/sun.jpg" > <div class="progress" id="bar-sun"></div></div>
     <div class="bar"><img src="./image/fertilizer.jpg"> <div class="progress" id="bar-fertilizer"></div></div>
     <div class="bar"><img src="./image/ladybug.jpg"> <div class="progress" id="bar-ladybug"></div></div>
     </div>
+        </section>
+    
 </div>
-
-    <div id="plant">
+plant level that changes accordingly with each level
+    <div id="plant-level">
         <div class="plant-0"> <img src="./image/plant0.jpg" alt="plant0"></div>
         <div class="plant-1"> <img src="./image/plant1.png" alt="plant1"></div>
         <div class="plant-2"> <img src="./image/plant2.png" alt="plant2"></div>
@@ -39,9 +58,20 @@
         <div class="plant-4"> <img src="./image/plant4.png" alt="plant4"></div>
         <div class="plant-5"> <img src="./image/plant5.jpg" alt="plant5"></div>
         <div class="plant-6"> <img src="./image/plant6.jpg" alt="plant6"></div>
-        <div class="plant-7"> <img src="./image/plant7.jpg" alt="plant7"></div>
-    </div> 
-
-</body>
-<script src="script.js"></script>
+        
+    </div>-->
+    <!--end sreen
+<div id="gameover-screen">
+<img src="./image/plant7.jpg" alt="" class="end-game-img">
+<h2> You got it, let's take a nap</h2>
+<br>
+<button id="restart-button">Restart</button>
+    
+   
+  </div>-->
+    <script type="text/javascript" src="js/Obstacles.js"></script>
+    <script type="text/javascript" src="js/player.js"></script>
+    <script type="text/javascript" src="js/game.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+  </body>
 </html>
