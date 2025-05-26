@@ -5,7 +5,7 @@ class Game {
     this.gamePage = document.querySelector("#Game-Page");
     this.gameScreen = document.querySelector("#game-screen");
     this.infoContainer = document.querySelector("#info-container");
-    this.ProgressBar = document.querySelector("#progress-bar");
+    this.ProgressBarElement = document.querySelector("#progress-bar");
     this.plantlevel = document.querySelector("#plant-level");
     this.gameOverScreen = document.querySelector("#gameover-screen");
     this.restartGameButton = document.querySelector("#restart-button");
@@ -14,8 +14,9 @@ class Game {
     this.width = 1710;
     this.top = 0;
     this.obstacles = [new Obstacles(this.gameScreen)];
+    this.Bugs = [new Bugs(this.gameScreen)];
     this.level = 5;
-    this.ProgressBar = 100;
+    this.progressBarValue = 100;
     this.lives = 5;
     this.gameIsOver = false;
     this.gameIntervalId = null;
@@ -59,8 +60,8 @@ class Game {
       // check if the obstacles hits the player
       if (this.player.didCollide(currentObstacles)) {
         this.score++;
-        this.ProgressBar.innerText = this.score;
-        console.log(" got it");
+        this.ProgressBarElement.innerText = this.score;
+        console.log("got it");
         this.obstacles.splice(i, 1);
         //remove from the DOM
         currentObstacles.element.remove();
@@ -74,6 +75,19 @@ class Game {
         //remove from the DOM
         currentObstacles.element.remove();
         i--;
+      }
+    }
+    // moving bugs
+    for (let i = 0; i < this.Bugs.length; i++) {
+      const currentBug = this.Bugs[i];
+      currentBug.move();
+
+      //colision bugs
+      if (this.player.didCollide(currentBug)) {
+        this.Bugs.splice(i, 1);
+        currentBug.element.remove();
+        this.lives--;
+        this.livesContainer.innerText = this.lives;
       }
     }
   }
