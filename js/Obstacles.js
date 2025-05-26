@@ -1,10 +1,11 @@
 class Obstacles {
   constructor(gameScreen) {
     this.gameScreen = gameScreen;
-    this.left = 200;
-    this.top = 0;
-    this.width = 150;
-    this.height = 180;
+    //syntax for random number between 0 and 450
+    this.left = Math.floor(Math.random() * (1500 - 0) + 0);
+    this.top = -150;
+    this.width = 125;
+    this.height = 150;
     this.directionX = 0;
 
     //create img element

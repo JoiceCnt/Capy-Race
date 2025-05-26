@@ -22,12 +22,27 @@ class Player {
     if (this.left < 0) {
       this.left = 0;
     }
-    if (this.left > 1710 - 180) {
-      this.left = 1510 - 180;
+    const maxRight = this.gameScreen.offsetWidth - this.width;
+    if (this.left > maxRight) {
+      this.left = maxRight;
     }
     this.updatePosition();
   }
   updatePosition() {
     this.element.style.left = this.left + "px";
+  }
+  didCollide(obstacle) {
+    const playRect = this.element.getBoundingClientRect();
+    const obstacleRect = obstacle.element.getBoundingClientRect();
+    if (
+      playRect.left < obstacleRect.right &&
+      playRect.right > obstacleRect.left &&
+      playRect.top < obstacleRect.bottom &&
+      playRect.bottom > obstacleRect.top
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

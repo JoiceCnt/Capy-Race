@@ -20,19 +20,27 @@ function startGame() {
   ourGame = new Game();
   ourGame.start();
 }
+
 window.addEventListener("keydown", (event) => {
-  if (ourGame && ourGame.player) {
-    if (event.key === "ArrowLeft") {
-      ourGame.player.directionX = -5;
-    } else if (event.key === "ArrowRight") {
-      ourGame.player.directionX = 5;
-    }
+  if (event.code === "ArrowRight") {
+    console.log("right pressed");
+    ourGame.player.directionX = 5;
   }
-});
-window.addEventListener("keyup", (event) => {
-  if (ourGame && ourGame.player) {
-    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+
+  if (event.code === "ArrowLeft") {
+    console.log("left pressed");
+    ourGame.player.directionX = -5;
+  }
+
+  window.addEventListener("keyup", (event) => {
+    if (event.code === "ArrowRight") {
+      console.log("right pressed");
       ourGame.player.directionX = 0;
     }
-  }
+
+    if (event.code === "ArrowLeft") {
+      console.log("left pressed");
+      ourGame.player.directionX = 0;
+    }
+  });
 });
