@@ -1,6 +1,7 @@
 class Obstacles {
-  constructor(gameScreen) {
+  constructor(gameScreen, speed) {
     this.gameScreen = gameScreen;
+    this.speed = speed || 3;
     this.top = -150;
     this.width = 125;
     this.height = 150;
@@ -10,6 +11,7 @@ class Obstacles {
       "../image/sun.jpg",
       "../image/water.jpg",
     ];
+
     //syntax for random number between 0 and screen width
     this.left = Math.floor(
       Math.random() * (this.gameScreen.offsetWidth - this.width)
@@ -21,6 +23,7 @@ class Obstacles {
     this.element = document.createElement("img");
     this.element.src = this.imagesArray[this.randomImageindex];
     this.element.className = "obstacles";
+
     // makes the sun square
     if (this.imagesArray[this.randomImageindex].includes("sun")) {
       this.element.style.width = "120px";
@@ -38,7 +41,7 @@ class Obstacles {
   }
   move() {
     this.top = this.top + 5;
-
+    this.top += this.speed;
     this.updatePosition();
   }
   updatePosition() {

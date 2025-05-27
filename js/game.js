@@ -4,12 +4,31 @@ class Game {
     this.startGameButton = document.querySelector("#start-button");
     this.gamePage = document.querySelector("#Game-Page");
     this.gameScreen = document.querySelector("#game-screen");
+
     this.infoContainer = document.querySelector("#info-container");
     this.ProgressBarElement = document.querySelector("#progress-bar");
     this.plantlevel = document.querySelector("#plant-level");
     this.scoreboard = document.querySelector("#score");
     this.livesElement = document.querySelector("#lives"); // lives number
     this.player = new Player(this.gameScreen); // adds capibara to the gamescreen
+    this.treeImage = document.createElement("img"); // create tree image
+    this.treeImage.src = "../image/plant0.jpg";
+    this.treeImage.style.position = "absolute";
+    this.treeImage.style.bottom = "10px";
+    this.treeImage.style.left = "130px";
+    this.treeImage.style.width = "120px";
+    this.treeImage.style.zIndex = "10";
+
+    document.getElementById("sideBar").appendChild(this.treeImage);
+    this.stagesimages = [
+      "../image/plant0.jpg",
+      "../image/plant1.png",
+      "../image/plant2.png",
+      "../image/plant3.jpg",
+      "../image/plant4.png",
+      "../image/plant5.jpg",
+      "../image/plant6.jpg",
+    ];
     this.height = 900;
     this.width = 1710;
     this.top = 0;
@@ -22,6 +41,7 @@ class Game {
     this.gameIntervalId = null;
     this.obstaclesInterval = null;
     this.frames = 0;
+    this.obstacleSpeed = 3;
   }
   start() {
     this.gameScreen.style.height = this.height + "px";
@@ -49,7 +69,7 @@ class Game {
     this.player.move();
     //console.log(this.obstacles);
     // adds a new obstacle every 40 frames
-    if (this.frames % 150 === 0 && this.obstacles.length < 10) {
+    if (this.frames % 120 === 0 && this.obstacles.length < 10) {
       this.obstacles.push(new Obstacles(this.gameScreen));
     }
     // adds a new bug every 30 frames
@@ -65,11 +85,15 @@ class Game {
       // check if the obstacles hits the player
       if (this.player.didCollide(currentObstacles)) {
         this.score++;
+        if (this.score % 20 === 0) {
+          this.obstacleSpeed += 1;
+        }
         this.scoreboard.innerText = this.score;
+        this.updateEvolutionStage();
 
         console.log(this.score);
         //verify if the player wins
-        if (this.score >= 10) {
+        if (this.score >= 70) {
           this.gameOver(true);
           return;
         }
@@ -130,11 +154,20 @@ class Game {
     clearInterval(this.gameIntervalId);
     clearInterval(this.obstaclesInterval);
 
+    this.treeImage.remove();
+
     // restart button
     document.querySelectorAll(".restart-button").forEach((button) => {
       button.addEventListener("click", () => {
         location.reload();
       });
     });
+  }
+  updateEvolutionStage() {
+    const stage = Math.min(
+      Math.floor(this.score / 10),
+      this.stagesimages.length - 1
+    );
+    this.treeImage.src = this.stagesimages[stage];
   }
 }
