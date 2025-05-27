@@ -1,24 +1,35 @@
 class Obstacles {
   constructor(gameScreen) {
     this.gameScreen = gameScreen;
-    //syntax for random number between 0 and 450
-    this.left = Math.floor(Math.random() * (1500 - 0) + 0);
     this.top = -150;
     this.width = 125;
     this.height = 150;
     this.directionX = 0;
     this.imagesArray = [
+      "../image/fertilizer.jpg",
       "../image/sun.jpg",
       "../image/water.jpg",
-      "../image/fertilizer.jpg",
     ];
+    //syntax for random number between 0 and screen width
+    this.left = Math.floor(
+      Math.random() * (this.gameScreen.offsetWidth - this.width)
+    );
+
     this.randomImageindex = Math.floor(Math.random() * this.imagesArray.length);
+
     //create img element
     this.element = document.createElement("img");
     this.element.src = this.imagesArray[this.randomImageindex];
-    this.element.className = "fertilizer";
-    this.element.style.height = this.height + "px";
-    this.element.style.width = this.width + "px";
+    this.element.className = "obstacles";
+    // makes the sun square
+    if (this.imagesArray[this.randomImageindex].includes("sun")) {
+      this.element.style.width = "120px";
+      this.element.style.height = "120px";
+    } else {
+      this.element.style.width = this.width + "px";
+      this.element.style.height = this.height + "px";
+    }
+
     this.element.style.left = this.left + "px";
     this.element.style.top = this.top + "px";
     this.element.style.position = "absolute";

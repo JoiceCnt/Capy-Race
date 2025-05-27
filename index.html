@@ -18,8 +18,8 @@
     <!--game area where the capibara moves and objects fall -->
     <div id="Game-Page">
       <section id="sideBar">
-        <h3>Level: <span id="level">5</span></h3>
-        <h3>Lives: <span id=" lives">5</span></h3>
+        <h3>Level: <span id="score">5</span></h3>
+        <h3>Lives: <span id="lives">5</span></h3>
       </section>
 
       <div id="game-screen">
@@ -32,12 +32,8 @@
         <img src="./image/ladybug.jpg" class="">-->
       </div>
        <div id="progress-bar">
-        <section>
-        <h3>Progress bar </h3>
-    <div class="bar"><img src="./image/water.jpg"><div class="progress" id="bar-water"></div></div>
-    <div class="bar"><img src="./image/sun.jpg" > <div class="progress" id="bar-sun"></div></div>
-    <div class="bar"><img src="./image/fertilizer.jpg"> <div class="progress" id="bar-fertilizer"></div></div>
-    <div class="bar"><img src="./image/ladybug.jpg"> <div class="progress" id="bar-ladybug"></div></div>
+         <div class=" input"></div>     
+    
     </div>
         </section>
     </div>
@@ -61,18 +57,21 @@ plant level that changes accordingly with each level
         <div class="plant-6"> <img src="./image/plant6.jpg" alt="plant6"></div>
         
     </div>-->
-    <!--end sreen
-<div id="gameover-screen">
-<img src="./image/plant7.jpg" alt="" class="end-game-img">
-<h2> You got it, let's take a nap</h2>
-<br>
-<button id="restart-button">Restart</button>
+    <!--end sreen-->
+
+ <div id="loser-screen" class="hidden">        
+    <img src="./image/GameOver.jpg" alt="loser" class = "end-screen-image">
+    <button class="restart-button">Restart</button>
+    </div>
+
+<div id="winner-screen" class="hidden">
+    <img src="./image/won.png" alt="winner" class="end-screen-image">
+    <button class="restart-button">Restart when you are ready</button>
+    </div>
     
-   
-  </div>-->
     <script type="text/javascript" src="js/Bugs.js"></script>
     <script type="text/javascript" src="js/Obstacles.js"></script>
-    <script type="text/javascript" src="js/player.js"></script>
+    <script type="text/javascript" src="js/player.js"></script>   
     <script type="text/javascript" src="js/game.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
   </body>

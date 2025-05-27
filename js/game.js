@@ -1,21 +1,21 @@
 class Game {
   constructor() {
     this.startScreen = document.querySelector("#start-screen");
-    this.startGameButton = document.querySelector("#Start-button");
+    this.startGameButton = document.querySelector("#start-button");
     this.gamePage = document.querySelector("#Game-Page");
     this.gameScreen = document.querySelector("#game-screen");
     this.infoContainer = document.querySelector("#info-container");
     this.ProgressBarElement = document.querySelector("#progress-bar");
     this.plantlevel = document.querySelector("#plant-level");
-    this.gameOverScreen = document.querySelector("#gameover-screen");
-    this.restartGameButton = document.querySelector("#restart-button");
+    this.scoreboard = document.querySelector("#score");
+    this.livesElement = document.querySelector("#lives"); // lives number
     this.player = new Player(this.gameScreen); // adds capibara to the gamescreen
     this.height = 900;
     this.width = 1710;
     this.top = 0;
     this.obstacles = [new Obstacles(this.gameScreen)];
-    this.Bugs = [new Bugs(this.gameScreen)];
-    this.level = 5;
+    this.bugs = [new Bugs(this.gameScreen)];
+    this.score = 5;
     this.progressBarValue = 100;
     this.lives = 5;
     this.gameIsOver = false;
@@ -36,20 +36,25 @@ class Game {
   }
   gameLoop() {
     // add one to the frames
-    this.frames++;
-    this.update();
-
     if (this.gameIsOver) {
       clearInterval(this.gameIntervalId);
+      this.gameOver(false); // player lost
     }
+    this.frames++;
+
     this.update();
   }
   update() {
-    console.log("test");
+    // console.log("test");
     this.player.move();
+    //console.log(this.obstacles);
     // adds a new obstacle every 40 frames
-    if (this.frames % 80 === 0) {
+    if (this.frames % 150 === 0 && this.obstacles.length < 10) {
       this.obstacles.push(new Obstacles(this.gameScreen));
+    }
+    // adds a new bug every 30 frames
+    if (this.frames % 200 === 0 && this.bugs.length < 15) {
+      this.bugs.push(new Bugs(this.gameScreen));
     }
 
     //moving the obstacles array
@@ -60,8 +65,14 @@ class Game {
       // check if the obstacles hits the player
       if (this.player.didCollide(currentObstacles)) {
         this.score++;
-        this.ProgressBarElement.innerText = this.score;
-        console.log("got it");
+        this.scoreboard.innerText = this.score;
+
+        console.log(this.score);
+        //verify if the player wins
+        if (this.score >= 10) {
+          this.gameOver(true);
+          return;
+        }
         this.obstacles.splice(i, 1);
         //remove from the DOM
         currentObstacles.element.remove();
@@ -78,17 +89,52 @@ class Game {
       }
     }
     // moving bugs
-    for (let i = 0; i < this.Bugs.length; i++) {
-      const currentBug = this.Bugs[i];
+    for (let i = 0; i < this.bugs.length; i++) {
+      const currentBug = this.bugs[i];
       currentBug.move();
 
-      //colision bugs
+      //collision bugs
       if (this.player.didCollide(currentBug)) {
-        this.Bugs.splice(i, 1);
+        this.bugs.splice(i, 1);
         currentBug.element.remove();
         this.lives--;
-        this.livesContainer.innerText = this.lives;
+        this.livesElement.innerText = this.lives;
+        i--;
+        if (this.lives === 0) {
+          this.gameIsOver = true;
+        }
       }
     }
+  }
+  gameOver(won) {
+    this.gameScreen.style.display = "none";
+
+    // link html end screens
+    const loserScreen = document.getElementById("loser-screen");
+    const winnerScreen = document.getElementById("winner-screen");
+
+    // hide both screens first
+    loserScreen.classList.add("hidden");
+    winnerScreen.classList.add("hidden");
+
+    // shows the correct screen accounding to the result
+    if (won) {
+      winnerScreen.classList.remove("hidden");
+      winnerScreen.style.display = "flex";
+    } else {
+      loserScreen.classList.remove("hidden");
+      loserScreen.style.display = "flex";
+    }
+
+    // stop the game
+    clearInterval(this.gameIntervalId);
+    clearInterval(this.obstaclesInterval);
+
+    // restart button
+    document.querySelectorAll(".restart-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        location.reload();
+      });
+    });
   }
 }

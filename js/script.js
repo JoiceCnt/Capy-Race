@@ -7,11 +7,25 @@ const progressBar = document.querySelector("#progress-bar");
 const plantLevel = document.querySelector("#plant-level");
 const gameOver = document.querySelector("#gameover-screen");
 const capybara = document.querySelector("#capybara");
+const restartButtons = document.querySelectorAll(".restart-button");
+
+restartButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    window.location.reload();
+  });
+});
+const restartGameButton = document.querySelector("#restart-button");
 let ourGame;
 
 //event Listeners
 startGameButton.addEventListener("click", () => {
   startGame();
+});
+
+restartButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    restartGame(); // sem reload, usa sua lógica de reinício
+  });
 });
 
 // functions

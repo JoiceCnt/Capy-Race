@@ -2,10 +2,10 @@ class Bugs {
   constructor(gameScreen) {
     this.gameScreen = gameScreen;
     //syntax for random number between 0 and 450
-    this.left = Math.floor(Math.random() * (1300 - 0) + 0);
+    this.left = Math.floor(Math.random() * (1100 - 0) + 0);
     this.top = -150;
-    this.width = 125;
-    this.height = 150;
+    this.width = 90;
+    this.height = 100;
     this.directionX = 0;
 
     //create img element
@@ -20,6 +20,7 @@ class Bugs {
 
     this.gameScreen.appendChild(this.element);
   }
+
   move() {
     this.top = this.top + 5;
 

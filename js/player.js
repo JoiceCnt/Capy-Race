@@ -1,5 +1,6 @@
 class Player {
   constructor(gameScreen) {
+    console.log("player file loaded");
     this.gameScreen = gameScreen;
     this.left = 605;
     this.top = 735;
@@ -17,6 +18,7 @@ class Player {
     this.element.style.position = "absolute";
     this.gameScreen.appendChild(this.element);
   }
+
   move() {
     this.left = this.left + this.directionX;
     if (this.left < 0) {
