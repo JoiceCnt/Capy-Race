@@ -59,8 +59,9 @@ class Game {
     this.progressWrapper.style.alignItems = "center";
     this.progressWrapper.style.flexDirection = "row";
     this.progressWrapper.style.gap = "10px";
-    this.progressWrapper.style.width = "100%";
-    this.progressWrapper.style.margin = "20px 0";
+    this.progressWrapper.style.width = "80%";
+    this.progressWrapper.style.height = "30px";
+    this.progressWrapper.style.margin = "5px 0";
 
     //create icon  BUG img
     this.bugIcon = document.createElement("img");
@@ -89,7 +90,7 @@ class Game {
 
     const sideBar = document.getElementById("sideBar");
     sideBar.style.width = "20vw";
-    sideBar.style.height = "100vh";
+    sideBar.style.height = "98vh";
     sideBar.style.display = "flex";
     sideBar.style.flexDirection = "column";
 
