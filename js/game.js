@@ -8,9 +8,36 @@ class Game {
     this.plantlevel = document.querySelector("#plant-level");
     this.scoreboard = document.querySelector("#score");
     this.livesElement = document.querySelector("#lives"); // lives number
+    //game page configuration
+    this.gamePage.style.display = "flex";
+    this.gamePage.style.flexDirection = "row";
+    this.gamePage.style.width = "100vw";
+    this.gamePage.style.height = "100vh";
+    // game screen configuration
+    this.gameScreen.style.width = "80vw";
+    this.gameScreen.style.height = "100vh";
+    this.gameScreen.style.overflow = "hidden";
+    this.gameScreen.style.position = "relative";
+
+    this.top = 0;
+    this.obstacles = [new Obstacles(this.gameScreen)];
+    this.bugs = [new Bugs(this.gameScreen)];
+    this.score = 0;
+    this.lives = 5;
+    this.gameIsOver = false;
+    this.gameIntervalId = null;
+    this.obstaclesInterval = null;
+    this.frames = 0;
+    this.obstacleSpeed = 4;
+    this.bugSpeed = 3;
+    this.waterPoints = 0;
+    this.sunPoints = 0;
+    this.fertilizerPoints = 0;
+
+    // progress bar filling (bug)
     this.progressBarContainer = document.createElement("div");
     this.progressBarContainer.style.width = "80%";
-    this.progressBarContainer.style.height = "40px";
+    this.progressBarContainer.style.height = "30px";
     this.progressBarContainer.style.border = "2px solid darkred";
     this.progressBarContainer.style.backgroundColor = "#fff";
     this.progressBarContainer.style.margin = "500px 0";
@@ -25,11 +52,46 @@ class Game {
 
     this.progressBarContainer.appendChild(this.progressFill);
 
-    document.getElementById("sideBar").appendChild(this.progressBarContainer);
+    // creating icon for the obstacles  progress bar
+    this.progressWrapper = document.createElement("div");
+    this.progressWrapper.style.display = "flex";
+    this.progressWrapper.style.alignItems = "center";
+    this.progressWrapper.style.alignItems = "center";
+    this.progressWrapper.style.flexDirection = "row";
+    this.progressWrapper.style.gap = "10px";
+    this.progressWrapper.style.width = "100%";
+    this.progressWrapper.style.margin = "20px 0";
+
+    //create icon  BUG img
+    this.bugIcon = document.createElement("img");
+    this.bugIcon.src = "../image/ladybug.jpg";
+    this.bugIcon.alt = "bug Icon";
+    this.bugIcon.style.width = "40px";
+    this.bugIcon.style.height = "40px";
+    this.bugIcon.style.objectFit = "contain";
+    this.bugIcon.style.marginLeft = "5px";
+
+    // add BUG img icon to the container
+    this.progressWrapper.appendChild(this.bugIcon);
+    this.progressWrapper.appendChild(this.progressBarContainer);
+
+    //adds the bug container to the sidebar
+    document.getElementById("sideBar").appendChild(this.progressWrapper);
+
+    //add img to obstacles bar
+    this.waterBar = this.createProgressBarWithIcon("../image/water.jpg");
+    this.sunBar = this.createProgressBarWithIcon("../image/sun.jpg");
+    this.fertilizerBar = this.createProgressBarWithIcon(
+      "../image/fertilizer.jpg"
+    );
 
     this.player = new Player(this.gameScreen); // adds capibara to the gamescreen
 
     const sideBar = document.getElementById("sideBar");
+    sideBar.style.width = "20vw";
+    sideBar.style.height = "100vh";
+    sideBar.style.display = "flex";
+    sideBar.style.flexDirection = "column";
 
     const spacer = document.createElement("div");
     spacer.style.flexGrow = "1";
@@ -52,19 +114,43 @@ class Game {
       "../image/plant5.jpg",
       "../image/plant6.jpg",
     ];
-    this.height = 900;
-    this.width = 1710;
-    this.top = 0;
-    this.obstacles = [new Obstacles(this.gameScreen)];
-    this.bugs = [new Bugs(this.gameScreen)];
-    this.score = 0;
-    this.lives = 5;
-    this.gameIsOver = false;
-    this.gameIntervalId = null;
-    this.obstaclesInterval = null;
-    this.frames = 0;
-    this.obstacleSpeed = 4;
-    this.bugSpeed = 3;
+  }
+  // creat progress bar for obstacles icons
+  createProgressBarWithIcon(iconPath) {
+    const wrapper = document.createElement("div");
+    wrapper.style.display = "flex";
+    wrapper.style.alignItems = "center";
+    wrapper.style.gap = "10px";
+    wrapper.style.margin = "20px 0";
+    wrapper.style.width = "80%";
+
+    const icon = document.createElement("img");
+    icon.src = iconPath;
+    icon.style.width = "40px";
+    icon.style.height = "40px";
+    icon.style.objectFit = "contain";
+
+    //stylying obstacles img in the progress bar
+    const barContainer = document.createElement("div");
+    barContainer.style.width = "80%";
+    barContainer.style.height = "30px";
+    barContainer.style.border = "2px solid #444";
+    barContainer.style.backgroundColor = "#eee";
+    barContainer.style.borderRadius = "15px";
+    barContainer.style.overflow = "hidden";
+
+    const fill = document.createElement("div");
+    fill.style.height = "100%";
+    fill.style.width = "0%";
+    fill.style.backgroundColor = "#228B22";
+    fill.style.transition = "width 0.3s ease-in-out";
+
+    barContainer.appendChild(fill);
+    wrapper.appendChild(icon);
+    wrapper.appendChild(barContainer);
+    document.getElementById("sideBar").appendChild(wrapper);
+
+    return fill;
   }
 
   // creaating progress bar
@@ -95,7 +181,7 @@ class Game {
     this.player.move();
     //console.log(this.obstacles);
     // adds a new obstacle every 40 frames
-    if (this.frames % 120 === 0 && this.obstacles.length < 10) {
+    if (this.frames % 150 === 0 && this.obstacles.length < 10) {
       this.obstacles.push(new Obstacles(this.gameScreen, this.obstacleSpeed));
     }
     // adds a new bug every 30 frames
@@ -111,11 +197,27 @@ class Game {
       // check if the obstacles hits the player
       if (this.player.didCollide(currentObstacles)) {
         this.score++;
-        if (this.score % 20 === 0) {
-          this.obstacleSpeed += 1;
+        if (currentObstacles.type === "water") {
+          this.waterPoints++;
+          const percent = (this.waterPoints / 10) * 100;
+          this.waterBar.style.width = `${percent}%`;
+        } else if (currentObstacles.type === "sun") {
+          this.sunPoints++;
+          const percent = (this.sunPoints / 10) * 100;
+          this.sunBar.style.width = `${percent}%`;
+        } else if (currentObstacles.type === "fertilizer") {
+          this.fertilizerPoints++;
+          const percent = (this.fertilizerPoints / 10) * 100;
+          this.fertilizerBar.style.width = `${percent}%`;
         }
-        this.scoreboard.innerText = this.score;
-        this.updateEvolutionStage();
+
+        const totalPoints =
+          this.waterPoints + this.sunPoints + this.fertilizerPoints;
+
+        if (totalPoints % 10 === 0) {
+          this.updateEvolutionStage();
+        }
+        // this.scoreboard.innerText = this.score;// USAR PARA LEVEL
 
         console.log(this.score);
 

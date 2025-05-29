@@ -59,32 +59,12 @@ body {
   top: 0;
 }
 #game-screen {
-  width: 100%;
-  max-width: 1300px;
+  height: 100vh;
+  width: 100vw;
   position: relative;
   background-color: rgb(233, 228, 220);
   overflow: hidden;
 }
-#capybara {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 180px;
-  height: auto;
-}
-#capybara img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-#progress-bar {
-  display: none;
-  background-color: rgb(207, 182, 149);
-  width: 20%;
-}
-
 #gameover-screen {
   background-image: "../image/GameOver.jpg";
 }

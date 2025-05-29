@@ -22,7 +22,17 @@ class Obstacles {
 
     //create img element
     this.element = document.createElement("img");
-    this.element.src = this.imagesArray[this.randomImageindex];
+    const selectedImage = this.imagesArray[this.randomImageindex];
+    this.element.src = selectedImage;
+
+    // Definir o tipo com base no caminho da imagem
+    if (selectedImage.includes("water")) {
+      this.type = "water";
+    } else if (selectedImage.includes("sun")) {
+      this.type = "sun";
+    } else if (selectedImage.includes("fertilizer")) {
+      this.type = "fertilizer";
+    }
     this.element.className = "obstacles";
 
     // makes the sun square
