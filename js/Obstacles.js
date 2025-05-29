@@ -8,9 +8,9 @@ class Obstacles {
     this.height = 180; // obstacles width
     this.directionX = 0;
     this.imagesArray = [
-      "../image/fertilizer.jpg",
-      "../image/sun.jpg",
-      "../image/water.jpg",
+      "./image/fertilizer.jpg",
+      "./image/sun.jpg",
+      "./image/water.jpg",
     ];
 
     //syntax for random number between 0 and screen width
