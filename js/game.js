@@ -14,8 +14,8 @@ class Game {
     this.gamePage.style.width = "100vw";
     this.gamePage.style.height = "100vh";
     // game screen configuration
-    this.gameScreen.style.width = "80vw";
-    this.gameScreen.style.height = "100vh";
+    this.gameScreen.style.width = "79vw";
+    this.gameScreen.style.height = "98vh";
     this.gameScreen.style.overflow = "hidden";
     this.gameScreen.style.position = "relative";
 

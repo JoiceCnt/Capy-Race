@@ -3,9 +3,9 @@ class Player {
     console.log("player file loaded");
     this.gameScreen = gameScreen;
     this.left = 605;
-    this.top = 80;
-    this.width = 10;
-    this.height = 15;
+    this.top = 85;
+    this.width = 13;
+    this.height = 18;
     this.directionX = 0;
 
     this.element = document.createElement("img");
