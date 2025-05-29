@@ -2,8 +2,8 @@ class Player {
   constructor(gameScreen) {
     console.log("player file loaded");
     this.gameScreen = gameScreen;
-    this.left = 605;
-    this.top = 735;
+    this.left = 900;
+    this.bottom = 0;
     this.width = 180;
     this.height = 180;
     this.directionX = 0;
@@ -14,7 +14,8 @@ class Player {
     this.element.style.height = this.height + "px";
     this.element.style.width = this.width + "px";
     this.element.style.left = this.left + "px";
-    this.element.style.top = this.top + "px";
+    this.element.style.bottom = this.bottom + "px";
+    this.element.style.left = this.left + "px";
     this.element.style.position = "absolute";
     this.gameScreen.appendChild(this.element);
   }

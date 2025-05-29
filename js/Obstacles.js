@@ -1,10 +1,11 @@
 class Obstacles {
   constructor(gameScreen, speed) {
     this.gameScreen = gameScreen;
-    this.speed = speed || 3;
+    this.speed = speed || 4;
+    this.bugSpeed = 4;
     this.top = -150;
-    this.width = 125;
-    this.height = 150;
+    this.width = 140;
+    this.height = 180; // obstacles width
     this.directionX = 0;
     this.imagesArray = [
       "../image/fertilizer.jpg",
@@ -26,7 +27,7 @@ class Obstacles {
 
     // makes the sun square
     if (this.imagesArray[this.randomImageindex].includes("sun")) {
-      this.element.style.width = "120px";
+      this.element.style.width = "120px"; // sun size
       this.element.style.height = "120px";
     } else {
       this.element.style.width = this.width + "px";

@@ -22,13 +22,13 @@ startGameButton.addEventListener("click", () => {
   startGame();
 });
 
-restartButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    restartGame(); // sem reload, usa sua lógica de reinício
+restartButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    window.location.reload();
   });
 });
 
-// functions
+// functions to start the game
 function startGame() {
   console.log("starting the game");
   ourGame = new Game();

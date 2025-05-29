@@ -1,11 +1,12 @@
 class Bugs {
-  constructor(gameScreen) {
+  constructor(gameScreen, speed) {
     this.gameScreen = gameScreen;
+    this.speed = speed || 3;
     //syntax for random number between 0 and 450
     this.left = Math.floor(Math.random() * (1100 - 0) + 0);
     this.top = -150;
-    this.width = 90;
-    this.height = 100;
+    this.width = 140;
+    this.height = 180;
     this.directionX = 0;
 
     //create img element
@@ -23,7 +24,7 @@ class Bugs {
 
   move() {
     this.top = this.top + 5;
-
+    this.top += this.speed;
     this.updatePosition();
   }
   updatePosition() {
