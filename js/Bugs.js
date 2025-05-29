@@ -11,7 +11,7 @@ class Bugs {
 
     //create img element
     this.element = document.createElement("img");
-    this.element.src = "../image/ladybug.jpg";
+    this.element.src = "./image/ladybug.jpg";
     this.element.className = "bug";
     this.element.style.height = this.height + "px";
     this.element.style.width = this.width + "px";

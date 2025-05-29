@@ -64,7 +64,7 @@ class Game {
 
     //create icon  BUG img
     this.bugIcon = document.createElement("img");
-    this.bugIcon.src = "../image/ladybug.jpg";
+    this.bugIcon.src = "./image/ladybug.jpg";
     this.bugIcon.alt = "bug Icon";
     this.bugIcon.style.width = "40px";
     this.bugIcon.style.height = "40px";
@@ -79,10 +79,10 @@ class Game {
     document.getElementById("sideBar").appendChild(this.progressWrapper);
 
     //add img to obstacles bar
-    this.waterBar = this.createProgressBarWithIcon("../image/water.jpg");
-    this.sunBar = this.createProgressBarWithIcon("../image/sun.jpg");
+    this.waterBar = this.createProgressBarWithIcon("./image/water.jpg");
+    this.sunBar = this.createProgressBarWithIcon("./image/sun.jpg");
     this.fertilizerBar = this.createProgressBarWithIcon(
-      "../image/fertilizer.jpg"
+      "./image/fertilizer.jpg"
     );
 
     this.player = new Player(this.gameScreen); // adds capibara to the gamescreen
@@ -98,7 +98,7 @@ class Game {
     sideBar.appendChild(spacer); // moves the tree to the bottom
 
     this.treeImage = document.createElement("img");
-    this.treeImage.src = "../image/plant0.jpg";
+    this.treeImage.src = "./image/plant0.jpg";
     this.treeImage.style.width = "180px";
     this.treeImage.style.transform = "scale(1.2)";
     this.treeImage.style.objectFit = "contain";
@@ -106,13 +106,13 @@ class Game {
     sideBar.appendChild(this.treeImage);
 
     this.stagesimages = [
-      "../image/plant0.jpg",
-      "../image/plant1.png",
-      "../image/plant2.png",
-      "../image/plant3.jpg",
-      "../image/plant4.png",
-      "../image/plant5.jpg",
-      "../image/plant6.jpg",
+      "./image/plant0.jpg",
+      "./image/plant1.png",
+      "./image/plant2.png",
+      "./image/plant3.jpg",
+      "./image/plant4.png",
+      "./image/plant5.jpg",
+      "./image/plant6.jpg",
     ];
   }
   // creat progress bar for obstacles icons

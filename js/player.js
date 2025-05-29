@@ -9,7 +9,7 @@ class Player {
     this.directionX = 0;
 
     this.element = document.createElement("img");
-    this.element.src = "../image/capybara.jpg";
+    this.element.src = "./image/capybara.jpg";
     this.element.className = "capybara";
     this.element.style.height = this.height + "%";
     this.element.style.width = this.width + "%";
