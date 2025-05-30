@@ -3,16 +3,17 @@ class Player {
     console.log("player file loaded");
     this.gameScreen = gameScreen;
     this.left = 605;
-    this.top = 85;
-    this.width = 13;
-    this.height = 18;
+    this.top = 82;
+    this.width = 180;
+    this.height = 180;
     this.directionX = 0;
+    this.speed = 25;
 
     this.element = document.createElement("img");
     this.element.src = "./image/capybara.jpg";
     this.element.className = "capybara";
-    this.element.style.height = this.height + "%";
-    this.element.style.width = this.width + "%";
+    this.element.style.height = this.height + "px";
+    this.element.style.width = this.width + "px";
     this.element.style.left = this.left + "px";
     this.element.style.top = this.top + "%";
     this.element.style.left = this.left + "px";

@@ -8,6 +8,7 @@ class Game {
     this.plantlevel = document.querySelector("#plant-level");
     this.scoreboard = document.querySelector("#score");
     this.livesElement = document.querySelector("#lives"); // lives number
+
     //game page configuration
     this.gamePage.style.display = "flex";
     this.gamePage.style.flexDirection = "row";
@@ -20,20 +21,24 @@ class Game {
     this.gameScreen.style.position = "relative";
 
     this.top = 0;
+    this.obstaclesSpeed = 8;
     this.obstacles = [new Obstacles(this.gameScreen)];
     this.bugs = [new Bugs(this.gameScreen)];
     this.score = 0;
     this.lives = 5;
+    this.isPaused = false;
     this.gameIsOver = false;
     this.gameIntervalId = null;
     this.obstaclesInterval = null;
+
     this.frames = 0;
-    this.obstacleSpeed = 4;
-    this.bugSpeed = 3;
     this.waterPoints = 0;
     this.sunPoints = 0;
     this.fertilizerPoints = 0;
-
+    //bring levels from html
+    this.level = 0;
+    this.levelElement = document.getElementById("score");
+    this.levelElement.innerText = this.level;
     // progress bar filling (bug)
     this.progressBarContainer = document.createElement("div");
     this.progressBarContainer.style.width = "80%";
@@ -139,7 +144,7 @@ class Game {
     barContainer.style.backgroundColor = "#eee";
     barContainer.style.borderRadius = "15px";
     barContainer.style.overflow = "hidden";
-
+    // filling progress bar
     const fill = document.createElement("div");
     fill.style.height = "100%";
     fill.style.width = "0%";
@@ -173,6 +178,7 @@ class Game {
       this.gameOver(false); // player lost
       return;
     }
+    if (this.isPaused) return; // pause the game with space bar
     this.frames++;
     this.update();
   }
@@ -182,43 +188,89 @@ class Game {
     this.player.move();
     //console.log(this.obstacles);
     // adds a new obstacle every 40 frames
-    if (this.frames % 150 === 0 && this.obstacles.length < 10) {
-      this.obstacles.push(new Obstacles(this.gameScreen, this.obstacleSpeed));
+    if (this.frames % 60 === 0) {
+      //&& this.obstacles.length < 10
+      this.obstacles.push(new Obstacles(this.gameScreen, this.obstaclesSpeed));
     }
     // adds a new bug every 30 frames
-    if (this.frames % 200 === 0 && this.bugs.length < 15) {
+    if (this.frames % 200 === 0) {
+      // && this.bugs.length < 15
       this.bugs.push(new Bugs(this.gameScreen, this.bugSpeed));
     }
 
     //moving the obstacles array
     for (let i = this.obstacles.length - 1; i >= 0; i--) {
       const currentObstacles = this.obstacles[i];
-      currentObstacles.move();
+      currentObstacles.move(); // make the obstacles fall
 
       // check if the obstacles hits the player
       if (this.player.didCollide(currentObstacles)) {
         this.score++;
-        if (currentObstacles.type === "water") {
+        if (currentObstacles.type === "water" && this.waterPoints < 5) {
           this.waterPoints++;
-          const percent = (this.waterPoints / 10) * 100;
-          this.waterBar.style.width = `${percent}%`;
-        } else if (currentObstacles.type === "sun") {
+          this.waterBar.style.width = `${(this.waterPoints / 5) * 100}%`;
+        } else if (currentObstacles.type === "sun" && this.sunPoints < 5) {
           this.sunPoints++;
-          const percent = (this.sunPoints / 10) * 100;
-          this.sunBar.style.width = `${percent}%`;
-        } else if (currentObstacles.type === "fertilizer") {
+          this.sunBar.style.width = `${(this.sunPoints / 5) * 100}%`;
+        } else if (
+          currentObstacles.type === "fertilizer" &&
+          this.fertilizerPoints < 5
+        ) {
           this.fertilizerPoints++;
-          const percent = (this.fertilizerPoints / 10) * 100;
-          this.fertilizerBar.style.width = `${percent}%`;
+          this.fertilizerBar.style.width = `${
+            (this.fertilizerPoints / 5) * 100
+          }%`;
+        }
+        if (
+          this.waterPoints >= 5 &&
+          this.sunPoints >= 5 &&
+          this.fertilizerPoints >= 5
+        ) {
+          // Só sobe se for menor que 6
+          if (this.level < 6) {
+            this.level++;
+            this.levelElement.innerText = this.level;
+
+            // Atualiza a planta
+            this.updateEvolutionStage();
+
+            // Reseta os pontos
+            this.waterPoints = 0;
+            this.sunPoints = 0;
+            this.fertilizerPoints = 0;
+
+            // Zera as barras visuais
+            this.waterBar.style.width = "0%";
+            this.sunBar.style.width = "0%";
+            this.fertilizerBar.style.width = "0%";
+          }
         }
 
         const totalPoints =
           this.waterPoints + this.sunPoints + this.fertilizerPoints;
 
-        if (totalPoints % 10 === 0) {
+        if (
+          this.waterPoints >= 5 &&
+          this.sunPoints >= 5 &&
+          this.fertilizerPoints >= 5
+        ) {
+          // upgade levels
           this.updateEvolutionStage();
+          this.scoreboard.innerText = `Level: ${Math.min(
+            Math.floor(this.score / 5),
+            this.stagesimages.length - 1
+          )}`;
+
+          // Restart points
+          this.waterPoints = 0;
+          this.sunPoints = 0;
+          this.fertilizerPoints = 0;
+
+          // restart procress bar
+          this.waterBar.style.width = "0%";
+          this.sunBar.style.width = "0%";
+          this.fertilizerBar.style.width = "0%";
         }
-        // this.scoreboard.innerText = this.score;// USAR PARA LEVEL
 
         console.log(this.score);
 
@@ -226,14 +278,12 @@ class Game {
         currentObstacles.element.remove();
         i--;
         //verify if the player wins
-        if (this.score >= 70) {
+        if (this.level >= this.stagesimages.length - 1) {
           this.gameOver(true);
           return;
         }
-        this.obstacles.splice(i, 1);
+
         //remove from the DOM
-        currentObstacles.element.remove();
-        i--;
       }
 
       //removing obstacles from aray and the DOM so they do not move off the page
@@ -299,10 +349,7 @@ class Game {
     });
   }
   updateEvolutionStage() {
-    const stage = Math.min(
-      Math.floor(this.score / 10),
-      this.stagesimages.length - 1
-    );
+    const stage = Math.min(this.level, this.stagesimages.length - 1);
     this.treeImage.src = this.stagesimages[stage];
   }
 }

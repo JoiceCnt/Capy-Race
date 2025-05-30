@@ -1,12 +1,11 @@
 class Obstacles {
   constructor(gameScreen, speed) {
     this.gameScreen = gameScreen;
-    this.speed = speed || 4;
-    this.bugSpeed = 4;
+    this.speed = speed || 3;
+    this.bugSpeed = 3;
     this.top = -150;
     this.width = 140;
     this.height = 180; // obstacles width
-    this.directionX = 0;
     this.imagesArray = [
       "./image/fertilizer.jpg",
       "./image/sun.jpg",
@@ -51,7 +50,6 @@ class Obstacles {
     this.gameScreen.appendChild(this.element);
   }
   move() {
-    this.top = this.top + 5;
     this.top += this.speed;
     this.updatePosition();
   }
